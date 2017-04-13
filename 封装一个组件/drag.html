@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+        #target {
+            width: 50px;
+            height: 50px;
+            background-color: orange;
+            cursor: move;
+            transform: translate(20px,20px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="target"></div>
+</body>
+<script src="./testToOther.js" charset="utf-8"></script>
+<!-- <script type="text/javascript">
+    var oElem = document.getElementById('target');
+
+    //声明2个变量
+    var startX = 0;
+    var startY = 0;
+
+    //    
+    oElem.addEventListener('mousedown', start, false);
+
+    function getTransform() {
+        var transform = '',
+            divStyle = document.createElement('div').style,
+            transformArr = ['transform', 'webkitTransform', 'MozTransform', 'msTransform', 'OTransform'],
+
+            i = 0,
+            len = transformArr.length;
+
+        for (; i < len; i++) {
+            //判断是否是某个类的属性用 in
+            if (transformArr[i] in divStyle) {
+                return transform = transformArr[i];
+            }
+        }
+
+        return transform;
+    }
+
+    function getStyle(elem, property) {
+        //ie通过currentStyle来获取元素样式，其他浏览器通过getComputedStyle(只读)来获取
+        //document.defaultView获取当前文档关联的window对象
+        return document.defaultView.getComputedStyle ? document.defaultView.getComputedStyle(elem, false)[property] : elem.currentStyle[property];
+    }
+
+    //获取元素初始位置
+    function getTargetPos(elem) {
+        var pos = {
+            x: 0,
+            y: 0
+        };
+        var transform = getTransform();
+        if (transform) {
+            var transformValue = getStyle(elem, transform);
+            if (transformValue == 'none') {
+                elem.style[transform] = 'translate(0, 0)';
+                return pos;
+            } else {
+                //获取所有数字
+                var temp = transformValue.match(/-?\d+/g);
+                return pos = {
+                    x: parseInt(temp[4].trim()),
+                    y: parseInt(temp[5].trim())
+                }
+            }
+        } else {
+            if (getStyle(elem, 'position') == 'static') {
+                elem.style.postion = 'relative';
+                return pos;
+            } else {
+                var x = parseInt(getStyle(elem, 'left') ? getStyle(elem, 'left') : 0);
+                var y = parseInt(getStyle(elem, 'top') ? getStyle(elem, 'top') : 0);
+                return pos = {
+                    x: x,
+                    y: y
+                }
+            }
+        }
+    }
+
+    function setTargetPos(elem, pos) {
+        var transform = getTransform();
+        if (transform) {
+            elem.style[transform] = 'translate(' + pos.x + 'px, ' + pos.y + 'px)';
+        } else {
+            elem.style.left = pos.x + 'px';
+            elem.style.top = pos.y + 'px';
+        }
+        return elem;
+    }
+
+    function start(event) {
+        startX = event.pageX;
+        startY = event.pageY;
+        //获取初始位置
+        var pos = getTargetPos(oElem);
+
+        sourceX = pos.x;
+        sourceY = pos.y;
+        console.log("startX",startX,"sourceX",sourceX);
+        //绑定事件
+        document.addEventListener('mousemove', move, false);
+        document.addEventListener('mouseup', end, false);
+    }
+
+    function move(event) {
+        console.log("move");
+        //获取当前鼠标位置
+        var currentX = event.pageX;
+        var currentY = event.pageY;
+
+        //计算差值
+        var distanceX = currentX - startX;
+        var distanceY = currentY - startY;
+        console.log("currentX",currentX,"distanceX",distanceX);
+        //计算并设置元素当前位置
+        setTargetPos(oElem, {
+            x: (sourceX + distanceX).toFixed(),
+            y: (sourceY + distanceY).toFixed()
+        })
+    }
+
+    function end(event) {
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+    }
+</script> -->
+<script type="text/javascript">
+    window.onload = function() {
+        new Drag('target');
+    }
+</script>
+
+</html>
