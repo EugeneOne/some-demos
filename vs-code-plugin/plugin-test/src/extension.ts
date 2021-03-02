@@ -20,7 +20,30 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('Hello World from plugin-test!');
 	});
 
-	context.subscriptions.push(disposable);
+	// 悬停
+	const hover = vscode.languages.registerHoverProvider('json', {
+		provideHover(document, position, token) {
+            const fileName = document.fileName;
+			const word = document.getText(document.getWordRangeAtPosition(position));
+			console.log(fileName);
+            if (/\/package\.json$/.test(fileName) && /\bmain\b/.test(word)) {
+                return new vscode.Hover("测试悬停提示");
+            }
+            return undefined;
+        }
+	});
+
+	const provider = vscode.languages.registerCompletionItemProvider('plaintext', {
+        provideCompletionItems(document, position) {
+			console.log(document, position);
+			
+            const completionItem1 = new vscode.CompletionItem('Hello World!');
+            const completionItem2 = new vscode.CompletionItem('World Peace!');
+            return [completionItem1, completionItem2];
+        }
+    });
+
+	context.subscriptions.push(disposable, hover, provider);
 }
 
 // this method is called when your extension is deactivated
